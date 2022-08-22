@@ -1,0 +1,275 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lua 03-基础学习笔记-学习方式与目标 | 雨林之后</title>
+<link rel="shortcut icon" href="https://yulinzhihou.github.io/favicon.ico?v=1660988316585">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yulinzhihou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Lua 03-基础学习笔记-学习方式与目标 | 雨林之后 - Atom Feed" href="https://yulinzhihou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+
+
+一、开始学习
+二、如何学习
+三、如何结合游戏实际
+四、学习目标
+
+
+
+
+一、开始学习
+以官方手册 Lua_5.3_manual.pdf 最新版本为蓝本进行基础语法知识的一个个吃透
+学习大纲：
+
+语言定义，词法约定
+基本数据类型
+变量
+..." />
+    <meta name="keywords" content="lua" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://yulinzhihou.github.io">
+  <img class="avatar" src="https://yulinzhihou.github.io/images/avatar.png?v=1660988316585" alt="">
+  </a>
+  <h1 class="site-title">
+    雨林之后
+  </h1>
+  <p class="site-description">
+    IT互联网技术,学习折腾研究
+
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/yulinzhihou" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Lua 03-基础学习笔记-学习方式与目标
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-20
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://yulinzhihou.github.io/tag/tWCfy2oNc/" class="post-tag">
+                  # lua
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0">一、开始学习</a></li>
+<li><a href="#%E4%BA%8C-%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0">二、如何学习</a></li>
+<li><a href="#%E4%B8%89-%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E6%B8%B8%E6%88%8F%E5%AE%9E%E9%99%85">三、如何结合游戏实际</a></li>
+<li><a href="#%E5%9B%9B-%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87">四、学习目标</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h2 id="一-开始学习">一、开始学习</h2>
+<p>以官方手册 <a href="https://pan.baidu.com/s/1VFKTS43s52dR0f4jzJEZYg?pwd=11xe">Lua_5.3_manual.pdf</a> 最新版本为蓝本进行基础语法知识的一个个吃透</p>
+<p>学习大纲：</p>
+<ol>
+<li>语言定义，词法约定</li>
+<li>基本数据类型</li>
+<li>变量</li>
+<li>循环</li>
+<li>流程控制</li>
+<li>函数</li>
+<li>运算符</li>
+<li>字符串</li>
+<li>数组</li>
+<li>迭代器</li>
+<li>table(表)</li>
+<li>文件(I/O)</li>
+</ol>
+<h2 id="二-如何学习">二、如何学习</h2>
+<p>我们约定，学习分为2步走，</p>
+<ol>
+<li>跟着官方手册学习基础语法，一个个的语法吃透。</li>
+<li>在本地使用安装好的环境进行编辑的语法学习</li>
+<li>熟悉变掌握好基础语法的实操，并结合游戏开发中使用的场景进行集中展示</li>
+<li>建议大家做好实战的功能和作业，毕竟看得懂和会写不是一回事。</li>
+</ol>
+<h2 id="三-如何结合游戏实际">三、如何结合游戏实际</h2>
+<p>本次课程将以一个游戏源码进行结合教学。</p>
+<p>服务端：<code>Public/Data/Script</code> 目录里面的脚本</p>
+<p>客户端：<code>Interface</code> 目录里面</p>
+<h2 id="四-学习目标">四、学习目标</h2>
+<ol>
+<li>能够独立写出基础的语法结构</li>
+<li>能够根据游戏脚本正常处理编码问题</li>
+<li>可以独自完成脚本的书写以及调试工作</li>
+</ol>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0">一、开始学习</a></li>
+<li><a href="#%E4%BA%8C-%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0">二、如何学习</a></li>
+<li><a href="#%E4%B8%89-%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E6%B8%B8%E6%88%8F%E5%AE%9E%E9%99%85">三、如何结合游戏实际</a></li>
+<li><a href="#%E5%9B%9B-%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87">四、学习目标</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://yulinzhihou.github.io/post/thinkphp-think-migration/">
+              <h3 class="post-title">
+                ThinkPHP think-migration 数据迁移从零开始使用
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ca1d6fb437a399da4390',
+    clientSecret: 'e18e044fef2b96cd190004ede9be6618f319295b',
+    repo: 'yulinzhihou.github.io',
+    owner: 'yulinzhihou',
+    admin: ['yulinzhihou'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155979519748628"
+     crossorigin="anonymous"></script>
+  <a class="rss" href="https://yulinzhihou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

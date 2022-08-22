@@ -1,0 +1,323 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lua 04-基础学习笔记-词法约定 | 雨林之后</title>
+<link rel="shortcut icon" href="https://yulinzhihou.github.io/favicon.ico?v=1660988316585">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yulinzhihou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Lua 04-基础学习笔记-词法约定 | 雨林之后 - Atom Feed" href="https://yulinzhihou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+
+
+一、词法约定
+二、注释
+
+1、单行注释
+2、多行注释
+
+
+三、标示符
+四、关键词(字)，保留词(字)
+五、全局变量
+
+
+
+
+一、词法约定
+Lua 语言的格式自由。 它会忽略语法元素(符记)间的空格(包括换行) 和注释， 仅把它们看作为..." />
+    <meta name="keywords" content="lua" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://yulinzhihou.github.io">
+  <img class="avatar" src="https://yulinzhihou.github.io/images/avatar.png?v=1660988316585" alt="">
+  </a>
+  <h1 class="site-title">
+    雨林之后
+  </h1>
+  <p class="site-description">
+    IT互联网技术,学习折腾研究
+
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/yulinzhihou" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Lua 04-基础学习笔记-词法约定
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-20
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://yulinzhihou.github.io/tag/tWCfy2oNc/" class="post-tag">
+                  # lua
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E8%AF%8D%E6%B3%95%E7%BA%A6%E5%AE%9A">一、词法约定</a></li>
+<li><a href="#%E4%BA%8C-%E6%B3%A8%E9%87%8A">二、注释</a>
+<ul>
+<li><a href="#1-%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A">1、单行注释</a></li>
+<li><a href="#2-%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A">2、多行注释</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E6%A0%87%E7%A4%BA%E7%AC%A6">三、标示符</a></li>
+<li><a href="#%E5%9B%9B-%E5%85%B3%E9%94%AE%E8%AF%8D%E5%AD%97%E4%BF%9D%E7%95%99%E8%AF%8D%E5%AD%97">四、关键词(字)，保留词(字)</a></li>
+<li><a href="#%E4%BA%94-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F">五、全局变量</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h2 id="一-词法约定">一、词法约定</h2>
+<p>Lua 语言的格式自由。 它会忽略语法元素(符记)间的空格(包括换行) 和注释， 仅把它们看作为名字和关键字间的分割符。</p>
+<p>Lua 中的 名字 (也被称为 标识符) 可以是由非数字打头的任意字母下划 线和数字构成的字符串。 标识符可用于对变量、表的域、以及标签命名。</p>
+<p>下列 关键字 是保留的，不可用于名字:</p>
+<pre><code class="language-lua">and
+break
+false
+for
+local
+nil
+then
+true
+do
+else
+function
+goto
+not
+or
+until
+while
+elseif
+end
+if
+in
+repeat
+return
+</code></pre>
+<p>Lua 语言对大小写敏感: and 是一个保留字，但 And 与 AND 则是两个不同 的有效名字。 作为一个约定，程序应避免创建以下划线加一个或多个大写 字母构成的名字</p>
+<h2 id="二-注释">二、注释</h2>
+<h3 id="1-单行注释">1、单行注释</h3>
+<pre><code class="language-lua">-- 单行注释，前面有2个减号的代码不会被执行。
+</code></pre>
+<h3 id="2-多行注释">2、多行注释</h3>
+<pre><code class="language-lua">--[[
+ 多行注释 在这个区域内的代码不会被执行
+ 多行注释 在这个区域内的代码不会被执行
+ --]]
+</code></pre>
+<h2 id="三-标示符">三、标示符</h2>
+<p>Lua 标示符用于定义一个变量，函数获取其他用户定义的项。标示符以一个字母 A 到 Z 或 a 到 z 或下划线 _ 开头后加上 0 个或多个字母，下划线，数字（0 到 9）。</p>
+<p>最好不要使用下划线加大写字母的标示符，因为Lua的保留字也是这样的。</p>
+<p>Lua 不允许使用特殊字符如 @, $, 和 % 来定义标示符。 Lua 是一个区分大小写的编程语言。因此在 Lua 中 Runoob 与 runoob 是两个不同的标示符。以下列出了一些正确的标示符：</p>
+<h2 id="四-关键词字保留词字">四、关键词(字)，保留词(字)</h2>
+<p>以下列出了 Lua 的保留关键词。保留关键字不能作为常量或变量或其他用户自定义标示符：</p>
+<pre><code class="language-lua">and
+break
+false
+for
+local
+nil
+then
+true
+do
+else
+function
+goto
+not
+or
+until
+while
+elseif
+end
+if
+in
+repeat
+return
+</code></pre>
+<h2 id="五-全局变量">五、全局变量</h2>
+<p>在默认情况下，变量总是认为是全局的。</p>
+<p>全局变量不需要声明，给一个变量赋值后即创建了这个全局变量，访问一个没有初始化的全局变量也不会出错，只不过得到的结果是：nil。</p>
+<p>如果你想删除一个全局变量，只需要将变量赋值为nil。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E8%AF%8D%E6%B3%95%E7%BA%A6%E5%AE%9A">一、词法约定</a></li>
+<li><a href="#%E4%BA%8C-%E6%B3%A8%E9%87%8A">二、注释</a>
+<ul>
+<li><a href="#1-%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A">1、单行注释</a></li>
+<li><a href="#2-%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A">2、多行注释</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E6%A0%87%E7%A4%BA%E7%AC%A6">三、标示符</a></li>
+<li><a href="#%E5%9B%9B-%E5%85%B3%E9%94%AE%E8%AF%8D%E5%AD%97%E4%BF%9D%E7%95%99%E8%AF%8D%E5%AD%97">四、关键词(字)，保留词(字)</a></li>
+<li><a href="#%E4%BA%94-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F">五、全局变量</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://yulinzhihou.github.io/post/lua-03-ji-chu-xue-xi-bi-ji-xue-xi-fang-shi-yu-mu-biao/">
+              <h3 class="post-title">
+                Lua 03-基础学习笔记-学习方式与目标
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ca1d6fb437a399da4390',
+    clientSecret: 'e18e044fef2b96cd190004ede9be6618f319295b',
+    repo: 'yulinzhihou.github.io',
+    owner: 'yulinzhihou',
+    admin: ['yulinzhihou'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155979519748628"
+     crossorigin="anonymous"></script>
+  <a class="rss" href="https://yulinzhihou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

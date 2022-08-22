@@ -1,0 +1,261 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lua 01-基础学习笔记-初识Lua | 雨林之后</title>
+<link rel="shortcut icon" href="https://yulinzhihou.github.io/favicon.ico?v=1660988316585">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yulinzhihou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Lua 01-基础学习笔记-初识Lua | 雨林之后 - Atom Feed" href="https://yulinzhihou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+
+
+Lua是什么？🎩
+Lua应用场景 🏰
+Lua和C#的区别
+Lua学习资料
+
+
+
+
+Lua是什么？🎩
+Lua 是一种轻量小巧的脚本语言，用标准C语言编写并以源代码形式开放， 其设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的..." />
+    <meta name="keywords" content="lua" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://yulinzhihou.github.io">
+  <img class="avatar" src="https://yulinzhihou.github.io/images/avatar.png?v=1660988316585" alt="">
+  </a>
+  <h1 class="site-title">
+    雨林之后
+  </h1>
+  <p class="site-description">
+    IT互联网技术,学习折腾研究
+
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/yulinzhihou" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Lua 01-基础学习笔记-初识Lua
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-17
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://yulinzhihou.github.io/tag/tWCfy2oNc/" class="post-tag">
+                  # lua
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#lua%E6%98%AF%E4%BB%80%E4%B9%88">Lua是什么？🎩</a></li>
+<li><a href="#lua%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">Lua应用场景 🏰</a></li>
+<li><a href="#lua%E5%92%8Cc%E7%9A%84%E5%8C%BA%E5%88%AB">Lua和C#的区别</a></li>
+<li><a href="#lua%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99">Lua学习资料</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h2 id="lua是什么">Lua是什么？🎩</h2>
+<p>Lua 是一种轻量小巧的脚本语言，用标准C语言编写并以源代码形式开放， 其设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。</p>
+<p><a href="https://github.com/lua/lua">Lua源码: https://github.com/lua/lua.git</a></p>
+<p>Lua 是巴西里约热内卢天主教大学（Pontifical Catholic University of Rio de Janeiro）里的一个研究小组，由Roberto Ierusalimschy、Waldemar Celes 和 Luiz Henrique de Figueiredo所组成并于1993年开发。</p>
+<p>Lua可以很方便的和其他程序进行集成（c++，c#，java，，，，）</p>
+<h2 id="lua应用场景">Lua应用场景 🏰</h2>
+<ul>
+<li>游戏开发</li>
+<li>独立应用脚本</li>
+<li>Web 应用脚本： nginx , php</li>
+<li>扩展和数据库插件如：MySQL Proxy 和 MySQL WorkBench</li>
+<li>安全系统，如入侵检测系统</li>
+</ul>
+<h2 id="lua和c的区别">Lua和C#的区别</h2>
+<p>Lua可以在几乎所有的操作系统和平台进行编译运行<br>
+可以很方便的更新代码<br>
+更新了代码后，可以直接在手机上运行，不需要重新安装（后续的热更新方案）</p>
+<p>C#只能在特定的操作系统中进行编译成dll文件，然后打包进安装包在其他平台（Android、iOS）运行<br>
+在移动平台上不能更新替换已有的dll文件，除非重新下载安装包</p>
+<h2 id="lua学习资料">Lua学习资料</h2>
+<ol>
+<li><a href="https://pan.baidu.com/s/1VFKTS43s52dR0f4jzJEZYg?pwd=11xe">《Programming in Lua》第四版</a></li>
+<li><a href="http://www.runoob.com/lua/lua-tutorial.html">菜鸟 Lua 教程</a></li>
+<li><a href="www.lua.org">Lua官网</a></li>
+<li><a href="http://www.luaer.cn/">Lua中文网站</a></li>
+<li><a href="https://google.com"><code>Google</code></a> 和 <a href="https://baiduc.om"><code>Baidu</code></a></li>
+</ol>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#lua%E6%98%AF%E4%BB%80%E4%B9%88">Lua是什么？🎩</a></li>
+<li><a href="#lua%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">Lua应用场景 🏰</a></li>
+<li><a href="#lua%E5%92%8Cc%E7%9A%84%E5%8C%BA%E5%88%AB">Lua和C#的区别</a></li>
+<li><a href="#lua%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99">Lua学习资料</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://yulinzhihou.github.io/post/thinkphp-queue-bi-ji/">
+              <h3 class="post-title">
+                thinkphp thinkphp-queue 笔记 
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ca1d6fb437a399da4390',
+    clientSecret: 'e18e044fef2b96cd190004ede9be6618f319295b',
+    repo: 'yulinzhihou.github.io',
+    owner: 'yulinzhihou',
+    admin: ['yulinzhihou'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155979519748628"
+     crossorigin="anonymous"></script>
+  <a class="rss" href="https://yulinzhihou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

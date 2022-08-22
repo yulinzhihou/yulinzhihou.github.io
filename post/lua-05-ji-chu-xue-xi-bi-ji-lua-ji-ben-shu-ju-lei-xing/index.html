@@ -1,0 +1,302 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lua 05-基础学习笔记-Lua基本数据类型 | 雨林之后</title>
+<link rel="shortcut icon" href="https://yulinzhihou.github.io/favicon.ico?v=1660988316585">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yulinzhihou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Lua 05-基础学习笔记-Lua基本数据类型 | 雨林之后 - Atom Feed" href="https://yulinzhihou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+
+
+Lua 数据类型
+nil
+boolean
+number
+string
+function
+userdata
+thread
+table
+
+
+
+
+Lua 数据类型
+Lua 是动态类型语言，变量不要类型定义,只需要为变量赋值。 值可以存储在变..." />
+    <meta name="keywords" content="lua" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://yulinzhihou.github.io">
+  <img class="avatar" src="https://yulinzhihou.github.io/images/avatar.png?v=1660988316585" alt="">
+  </a>
+  <h1 class="site-title">
+    雨林之后
+  </h1>
+  <p class="site-description">
+    IT互联网技术,学习折腾研究
+
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/yulinzhihou" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Lua 05-基础学习笔记-Lua基本数据类型
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-20
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://yulinzhihou.github.io/tag/tWCfy2oNc/" class="post-tag">
+                  # lua
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#lua-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">Lua 数据类型</a></li>
+<li><a href="#nil">nil</a></li>
+<li><a href="#boolean">boolean</a></li>
+<li><a href="#number">number</a></li>
+<li><a href="#string">string</a></li>
+<li><a href="#function">function</a></li>
+<li><a href="#userdata">userdata</a></li>
+<li><a href="#thread">thread</a></li>
+<li><a href="#table">table</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h2 id="lua-数据类型">Lua 数据类型</h2>
+<p>Lua 是动态类型语言，变量不要类型定义,只需要为变量赋值。 值可以存储在变量中，作为参数传递或结果返回。</p>
+<p>Lua 中有 8 个基本类型分别为：nil、boolean、number、string、userdata、function、thread 和 table。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nil</td>
+<td>这个最简单，只有值nil属于该类，表示一个无效值（在条件表达式中相当于false）。</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>包含两个值：false和true。</td>
+</tr>
+<tr>
+<td>number</td>
+<td>表示双精度类型的实浮点数</td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串由一对双引号或单引号来表示</td>
+</tr>
+<tr>
+<td>function</td>
+<td>由 C 或 Lua 编写的函数</td>
+</tr>
+<tr>
+<td>userdata</td>
+<td>表示任意存储在变量中的C数据结构</td>
+</tr>
+<tr>
+<td>thread</td>
+<td>表示执行的独立线路，用于执行协同程序</td>
+</tr>
+<tr>
+<td>table</td>
+<td>Lua 中的表（table）其实是一个&quot;关联数组&quot;（associative arrays），数组的索引可以是数字、字符串或表类型。在 Lua 里，table 的创建是通过&quot;构造表达式&quot;来完成，最简单构造表达式是{}，用来创建一个空表。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nil">nil</h2>
+<h2 id="boolean">boolean</h2>
+<h2 id="number">number</h2>
+<h2 id="string">string</h2>
+<h2 id="function">function</h2>
+<h2 id="userdata">userdata</h2>
+<h2 id="thread">thread</h2>
+<h2 id="table">table</h2>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#lua-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">Lua 数据类型</a></li>
+<li><a href="#nil">nil</a></li>
+<li><a href="#boolean">boolean</a></li>
+<li><a href="#number">number</a></li>
+<li><a href="#string">string</a></li>
+<li><a href="#function">function</a></li>
+<li><a href="#userdata">userdata</a></li>
+<li><a href="#thread">thread</a></li>
+<li><a href="#table">table</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://yulinzhihou.github.io/post/lua-04-ji-chu-xue-xi-bi-ji-ci-fa-yue-ding/">
+              <h3 class="post-title">
+                Lua 04-基础学习笔记-词法约定
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ca1d6fb437a399da4390',
+    clientSecret: 'e18e044fef2b96cd190004ede9be6618f319295b',
+    repo: 'yulinzhihou.github.io',
+    owner: 'yulinzhihou',
+    admin: ['yulinzhihou'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155979519748628"
+     crossorigin="anonymous"></script>
+  <a class="rss" href="https://yulinzhihou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1060 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GS 命令及配置详解 | 雨林之后</title>
+<link rel="shortcut icon" href="https://yulinzhihou.github.io/favicon.ico?v=1660988316585">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yulinzhihou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="GS 命令及配置详解 | 雨林之后 - Atom Feed" href="https://yulinzhihou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="GS 命令及配置详解
+
+gs 环境安装有两种方式，在线安装，离线安装包安装。
+gs 环境正常与否，使用 docker ps 进行查看
+CONTAINER ID   IMAGE                                 ..." />
+    <meta name="keywords" content="shell,linux" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://yulinzhihou.github.io">
+  <img class="avatar" src="https://yulinzhihou.github.io/images/avatar.png?v=1660988316585" alt="">
+  </a>
+  <h1 class="site-title">
+    雨林之后
+  </h1>
+  <p class="site-description">
+    IT互联网技术,学习折腾研究
+
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/yulinzhihou" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              GS 命令及配置详解
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-17
+              </span>
+              <span>
+                33 min read
+              </span>
+              
+                <a href="https://yulinzhihou.github.io/tag/xO3JfDaNk/" class="post-tag">
+                  # shell
+                </a>
+              
+                <a href="https://yulinzhihou.github.io/tag/_0IXQXjhK/" class="post-tag">
+                  # linux
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h1 id="gs-命令及配置详解">GS 命令及配置详解</h1>
+<blockquote>
+<p>gs 环境安装有两种方式，在线安装，离线安装包安装。</p>
+<p>gs 环境正常与否，使用 <code>docker ps</code> 进行查看</p>
+<p>CONTAINER ID   IMAGE                                                             COMMAND                  CREATED      STATUS      PORTS                                                                                                                                         NAMES<br>
+9ec60be1c015   registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_server:latest    &quot;/bin/sh -c 'tail -f…&quot;   2 days ago   Up 2 days   0.0.0.0:13580-&gt;13580/tcp, :::13580-&gt;13580/tcp, 0.0.0.0:15680-&gt;15680/tcp, :::15680-&gt;15680/tcp, 0.0.0.0:21818-&gt;21818/tcp, :::21818-&gt;21818/tcp   gsserver<br>
+491a418c1430   registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_redis:latest     &quot;redis-server /etc/r…&quot;   2 days ago   Up 2 days   0.0.0.0:6379-&gt;6379/tcp, :::6379-&gt;6379/tcp                                                                                                     gsredis<br>
+b285de84d77d   registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_php:latest       &quot;docker-php-entrypoi…&quot;   2 days ago   Up 2 days   9000/tcp                                                                                                                                      gsphp<br>
+5c6991eca7c4   registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_mysql51:latest   &quot;/entrypoint.sh mysq…&quot;   2 days ago   Up 2 days   0.0.0.0:33061-&gt;3306/tcp, :::33061-&gt;3306/tcp                                                                                                   gsmysql<br>
+231e27afdb38   registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_nginx:latest     &quot;/docker-entrypoint.…&quot;   2 days ago   Up 2 days   0.0.0.0:51888-&gt;80/tcp, :::51888-&gt;80/tcp, 0.0.0.0:51443-&gt;443/tcp, :::51443-&gt;443/tcp                                                            gsnginx</p>
+</blockquote>
+<h2 id="untar">untar</h2>
+<ul>
+<li>功能：用于解压服务端压缩包，暂时只支持 <code>tlbb.tar.gz</code> 和 <code>tlbb.zip</code> 压缩包</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，服务端压缩包必须上传到 <code>/root</code> 目录下</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash"># 前提是已经上传了 tlbb.tar.gz 或 tlbb.zip 压缩包到 /root 目录下。
+untar
+
+[root@localhost ~]# untar
+tar: Removing leading `/' from member names
+服务端文件【tlbb.tar.gz】已经解压成功！！
+# 这个提示 tar: Removing leading `/' from member names 没有关系，是因为打包的时候造成的
+</code></pre>
+<h2 id="setini">setini</h2>
+<ul>
+<li>功能：用于设置服务端配置的3个常用 <code>ini</code> 文件，<code>ServerInfo.ini</code> <code>ShareMemInfo.ini</code> <code>LoginInfo.ini</code> 以及数据库连接和 <code>billing</code> 的配置文件</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用，</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，并且已经执行过 <code>untar</code>, <code>/tlgame/tlbb/Server/Config</code> 目录必须存在，否则会执行失败。</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash"># 已经执行过 untar, /tlgame/tlbb/Server/Config 目录必须存在，否则会执行失败。
+setini
+
+[root@localhost ~]# setini
+配置文件已经写入成功，可以执行【runtlbb】进行开服操作！！
+
+[root@localhost ~]# setini
+未上传服务端执行解压操作; 正确操作：上传服务端压缩包 tlbb.tar.gz或者 tlbb.zip 到 /root 目录下，执行 untar 再执行本命令
+上传了服务端也解压了，但服务端的目录名不正确：必须是 /tlgame/tlbb 不能是 /tlgame/tlbb2, /tlgame/tlbbhj
+[root@localhost ~]# 
+</code></pre>
+<h2 id="runtlbb">runtlbb</h2>
+<ul>
+<li>功能：用于启动服务端，相当于直接在容器里面调用 <code>run.sh</code> 脚本。因此需要确保启动脚本是正确的，如果运行不成功，则可能是服务端 run.sh 有问题</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统，请勿重复使用。</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用，</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，必须在 <code>setini</code> /  <code>restart</code> / <code>close</code> 命令后执行，或者重启服务器后。</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash"># 必须在 setini /  restart / close 命令后执行，或者重启服务器后。
+runtlbb
+
+[root@localhost ~]# runtlbb
+开始设置定时数据备份，目前为【1】小时备份一次数据库和版本！备份到 /tlgame/backup 目录下
+设置定时备份成功.【1】小时备份一次数据库和版本！备份到 /tlgame/backup 
+定时备份已启动，如果未生效，请重启 crond 服务或者直接重启一下服务器！
+已经成功启动服务端，请耐心等待几分钟后，建议使用：【runtop】查看开服的情况！！
+</code></pre>
+<h2 id="runtop">runtop</h2>
+<ul>
+<li>功能：查看开服是否成功，查看是否有 <code>ShareMemory</code> <code>Login</code>  <code>World</code>  <code>Server</code> 等进程稳定在线</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用，</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，必须在 <code>setini</code> /  <code>restart</code> / <code>close</code> 命令后执行，或者重启服务器后。</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash"># 如果是单Linux服务器，会有billing进程，如果是Windows + Linux 机器。则不能有 billing 进程 
+runtop 
+
+top - 10:50:44 up 226 days, 19:04,  0 users,  load average: 0.35, 0.28, 0.11
+Tasks:   9 total,   2 running,   7 sleeping,   0 stopped,   0 zombie
+Cpu(s):  1.7%us,  4.5%sy,  0.0%ni, 92.8%id,  0.2%wa,  0.7%hi,  0.1%si,  0.0%st
+Mem:  16307936k total, 16104184k used,   203752k free,   147216k buffers
+Swap: 12316664k total,     9728k used, 12306936k free, 11661940k cached
+
+    PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                                                                                                                                
+     97 root      20   0 1835m 1.6g  31m R 99.9 10.5   0:15.14 Server                                                                                                                                  
+     51 root      20   0  725m 363m 5692 S 19.6  2.3   0:03.58 Login                                                                                                                                   
+     49 root      20   0  715m 647m  95m S  3.0  4.1   0:01.12 World                                                                                                                                   
+     46 root      20   0  459m 334m 211m S  0.3  2.1   0:00.43 ShareMemory                                                                                                                             
+      1 root      20   0  4168  452  380 S  0.0  0.0   0:00.03 tail                                                                                                                                    
+      7 root      20   0 11372 2472 2276 S  0.0  0.0   0:00.02 bash                                                                                                                                    
+     21 root      20   0  692m  10m    4 S  0.0  0.1   0:00.05 billing                                                                                                                                 
+     98 root      20   0  4136  456  384 S  0.0  0.0   0:00.00 sleep                                                                                                                                   
+     99 root      20   0 14956 1976 1760 R  0.0  0.0   0:00.02 top
+</code></pre>
+<h2 id="link">link</h2>
+<ul>
+<li>功能：查看服务端的具体情况，或者是分步调，在容器里面，以上所有命令都无法使用，要使用则需要退出容器，使用 <code>exit</code> 指令即可退出</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用，</li>
+<li>参数：无，或者指定容器名称：{gsmysql|mysql},{gsphp|php},{gsredis|redis},{gsnginx|nginx},{gsserver|server|gs}
+<ul>
+<li>gsserver、server、gs、无参数： 连接主服务器容器</li>
+<li>gsmysql、mysql：连接数据库容器</li>
+<li>gsnginx、nginx：连接网站容器</li>
+<li>gsphp、php：连接php容器</li>
+<li>gsredis、redis：连接redis容器</li>
+</ul>
+</li>
+<li>条件：必须使用 <code>root</code> 登录，初始化容器后使用</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">link
+link gs
+link server
+link gsserver
+link mysql 
+link gsmysql
+……
+
+[root@localhost ~]# link
+[root@b011d4f46abe tlbb]# exit
+exit
+[root@localhost ~]# 
+
+[root@localhost ~]# link php
+/www # exit
+[root@localhost ~]# 
+
+[root@localhost ~]# link gs
+[root@b011d4f46abe tlbb]# exit
+exit
+[root@localhost ~]# 
+</code></pre>
+<h2 id="swap">swap</h2>
+<ul>
+<li>功能：增加云服务器或者虚拟机系统的虚拟内存，默认增加 4GB 虚拟内存。只是占用硬盘空间，不需要多次执行</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用，</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，小于或等于 5GB 内存的虚拟机或者服务器配置，必须需要使用，其他配置建议使用</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash"># 此命令在安装环境的时候会自动使用。
+swap 
+
+[root@localhost ~]# swap
+40+0 records in
+40+0 records out
+4194304000 bytes (4.2 GB, 3.9 GiB) copied, 3.97199 s, 1.1 GB/s
+Setting up swapspace version 1, size = 3.9 GiB (4194299904 bytes)
+no label, UUID=43d18603-0a6d-4217-b825-b5d32013561b
+虚拟缓存提升到 (1.9Gi + 4.0G) 成功！ 并且成功增加到开机自动加载！！
+
+[root@localhost ~]# swap
+虚拟缓存已经提升到 (5.9Gi) 
+[root@localhost ~]#
+</code></pre>
+<h2 id="rebuild">rebuild</h2>
+<ul>
+<li>功能：重新构建环境，删除当前所有容器，会清除数据库数据和版本，但为了保险起见，会执行备份版本和数据库的动作到 <code>/tlgame/backup</code> 目录里面</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用，</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">rebuild
+
+[root@localhost ~]# rebuild
+
+在准备正行重构操作！！，剩余 0 秒，可以在计时结束前，按 CTRL+C 退出！
+正在重构，数据全部清空…………正在备份版本数据请稍候……
+-ne 2022-05-10-11-20-47	tlbbdb-2022-05-10-11-20-47.sql	备份成功!!
+-ne 2022-05-10-11-20-47	web-2022-05-10-11-20-47.sql	备份成功
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+Creating gsredis ... done
+Creating gsphp   ... done
+Creating gsnginx ... done
+Creating gsmysql ... done
+Creating gsserver ... done
+正在还原修改参数之前的数据库与版本请稍候……
+环境已经重构成功，请上传服务端到指定位置，然后再开服操作！！可以重新上传服务端进行【untar】【setini】【runtlbb】进行开服操作！！
+[root@localhost ~]# 
+
+</code></pre>
+<h2 id="remove">remove</h2>
+<ul>
+<li>功能：卸载环境，删除所有已经构建好的数据，需要重新安装环境和配置文件，相当于回到装环境之前的系统状态</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@localhost backup]# remove 
+
+正准备恢复出厂设置，数据全清！！，剩余 0 秒，可以在计时结束前，按 CTRL+C 退出！
+正在进行清除操作…………
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_mysql51:latest
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_mysql51@sha256:fd012f357120b02906135e179d92c18252ac0406edea53e1853a7c480c93b326
+Deleted: sha256:495805ca94fd70d428b3e9d696a85635ed8dfba17fc37b7a3faa84f1ad712f9d
+Deleted: sha256:bea735d7701f04f17941ad14f0690e1f21cb2f12561b94810b9086837e8f4ab7
+Deleted: sha256:b2dec5966d9a66c97eb2976bf2c69ced9ee9c3a2bdff357925909a7225a4254c
+Deleted: sha256:11e4cf44e9e956beba77396621bcba9cddf00d06d42d75cb65fab21e5d56a5f2
+Deleted: sha256:3cdb6164f2cdf649b65163543aca8f04c57f0b6a7ed03f53812a42029d2c364f
+Deleted: sha256:9ba0ff86a69403bb13dccb545ae1647ee5f78fc8809184b9116775a519cca0cc
+Deleted: sha256:063b6d5dec8bccfdfc5070e99f9398ebe559d6be7b26d9469a189674702d01e1
+Deleted: sha256:a715cbb5facb298217965ae01f6a962fdfd7014d773defb8f861a98e3528af4f
+Deleted: sha256:60847150639c1f062e4c811292a0ac90feb8ad2307047888f36fbaec6525eee7
+Deleted: sha256:9da73b75a5acabadd0def99c9c03c152378ec7f8245911870aee8c2423bc5426
+Deleted: sha256:b9328446140741a04a007bdc66c00b566e30536ed4c4148ecebe59dc9fd70ce5
+Deleted: sha256:570c7bef6546a01f98727465a5ae18a8854991dc8fee57e8ff356f3b6f51b6e5
+Deleted: sha256:d6acae7b706dddc1704e61841adbefa5a70862b15dee9062ad202ced90df8f5e
+Deleted: sha256:cdc1687a85aa09dd394832c6563e488705c6300328ce3ec4a0366bf47d53e62f
+Deleted: sha256:304aecb5e13929f85d3ce2e9d83d0212866c8e55a460c94cf24bd75da1c7c153
+Deleted: sha256:f302be18d46a45c0edbbd9b4bc02db764a4b0b8cd9bd0490f33dfaff039a3b62
+Deleted: sha256:c523f3173f6028e5329fd401331c375f7b9b9e831d915fafaf358f55e36e3747
+Deleted: sha256:94e631422130dc414878fd05efe3d59de44c9d8904696a7c299a83f378a92845
+Deleted: sha256:c29b5eadf94a90a2abda13e765d4fad4825fd15621dea1d9a98b60b89b835c2a
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_php:latest
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_php@sha256:c9fa4d12eafd9199d1392c27d79551e9aea983dc380ba64b88ede65db08d1224
+Deleted: sha256:51a28e4c835fb9aba3caf17b06e2963b9db711ce5dc4415e0b0f66d67a866a3e
+Deleted: sha256:2e9de235ccf25ff543627d530d0ea1c2ae251f018624504c83f06b7c40e6d842
+Deleted: sha256:2f63bf074005133a6115d1b951a6a19a2ad1af99b22d83aea79673c9d4dfea11
+Deleted: sha256:c13232333adbefd792137a216942791182d0584c8945bdebb01184503b6dd2be
+Deleted: sha256:d8635163350d986f1de6dc6aae8c55a327cbcae6a8986c1ffa8b8d77979e8f16
+Deleted: sha256:d1a3b4ee43190842d5421f1b7fd72f8d7564484f918f0c41a4fd8a8b6c90e996
+Deleted: sha256:907bad747b384d3baf26c116fa015cf8cfd974d8adad32dc1736a47252bd3fa8
+Deleted: sha256:670c7cf751ecd207d29f0a967b5f1cf902924df3fca8ee034ac82eb8ee15b58b
+Deleted: sha256:11f025dcc75cb68d3cf0372b4ac7c6168076067445b331d97279bd8db3e3abaa
+Deleted: sha256:d50c4adf5b754b5fd647e53737838d2acc6c52043690d471eeebbe97740e2cae
+Deleted: sha256:f4587855d00262ccacee2c16a09e9d89bbb2a173aac0476ed5de5e779dea3b54
+Deleted: sha256:9a3976aada37adb652a9cb5db5f52721d77cc2770e671b185295542868f0c539
+Deleted: sha256:5e68cfe469150385ad96867f8388033bc7e631554e5e088f60b9619c7ff9b34d
+Deleted: sha256:a6e28afbb393d29598a4292cc263a184fe99549956e4d4ef91c278c915d04171
+Deleted: sha256:80e122b9321372ba1803d00ba138336675143556a3ca885d4dc05d2a4dbd6d84
+Deleted: sha256:41bbc3546c96661aa839ade6125e351cf0433621e25cfff27a2a916799647045
+Deleted: sha256:d6a4c08b455278ceb8f5ff1a49d74e99fcfedbd37e95699c026d37966fc5e248
+Deleted: sha256:e1f63e8f84cfb3f5da048ab204ba0eb6db787dea9ded4e51544a341918b11527
+Deleted: sha256:1144935dbc095f25ad457795528ea85d1a2b60d3212a19fbb92bf052748a09a5
+Deleted: sha256:c7d8c1180fae509771cdd0125389bb88eb16aabae370737f7e537b9cc4a786f9
+Deleted: sha256:da465cd11e9bb4d78638820700a5f32806906354cefda9357b84234436eda68f
+Deleted: sha256:4d7b0cfee3a9d75200db50305cecc4826c5af68c8a4ab0b3bdcbddbabeb29207
+Deleted: sha256:89caef9a7695fc454c054161a75ded49575b5c2c36ebf85576dc7baf8a079a97
+Deleted: sha256:bc276c40b172b1c5467277d36db5308a203a48262d5f278766cf083947d05466
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_redis:latest
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_redis@sha256:39a0c120d81d8c82bc8f00261681d3ff9ef90125c4b226b166f1f119d9963b20
+Deleted: sha256:0b06247ae7d94279f814f4fd3c0e50517c9496b675f6f5c53fd53ad43eb25b2d
+Deleted: sha256:0ad5d5c74a7a33a11fd43f9994b3bd0898fb1446d6fd342cacd653162c14ebe2
+Deleted: sha256:aa7c9d047a739cf43dd73496fa8857d6de1008876e7774d55c521225e05d172f
+Deleted: sha256:77937a1ffad71e98e5af2e04e4309b9aed93edadea86137c8f827b3cc7a9fd1b
+Deleted: sha256:bcee6518e9c95c040fe2371d17473cf15ae18fcd483599ca6bac95874c0176ae
+Deleted: sha256:72b2f38a39460857c7f833d9fb5ae1ad23f1454c90bf85040545daab59245690
+Deleted: sha256:fc6698595ab9165eb0f1e07b0930f45e925ab604b8549f225c93a6f83631ae40
+Deleted: sha256:764055ebc9a7a290b64d17cf9ea550f1099c202d83795aa967428ebdf335c9f7
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_server:latest
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_server@sha256:b9113028cb36dc145fe9b01ccbd0ec617149fc2a916399638d89c2771d9dd04d
+Deleted: sha256:93f765dc7ce1126add115def3f060069aeda9db3e4f63524b62b16148ee7b5a8
+Deleted: sha256:4e200fc95ab80ac7f3f1f0fa60e9f375822a1b098daea1d2e02ffb52fbafa66b
+Deleted: sha256:66995a0515395c0e920e1400df894d85680d9d4d5429aa630841f74a6275a5b8
+Deleted: sha256:dddf5c2566ce6e53206c8692242ddfa08a283f54ccf847bbeeff6d003a5b7955
+Deleted: sha256:ab9f7517fad03488e7dc75a0ac13c7687baf99595dbfad2c995f980e5d62551f
+Deleted: sha256:ad337ac82f03249b90fb8e937abb29b9ee4dc1d1beb9251af80d0c44edfa178a
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_nginx:latest
+Untagged: registry.cn-hangzhou.aliyuncs.com/yulinzhihou/gs_nginx@sha256:5c3cb8e053c106d00fbab1a9f7c26a59e0f01615f700f2239b1d89a3753f287c
+Deleted: sha256:fcda1a601b336775ae13b34113e9b1bff3f80752554e33d272e3bfaef2615f19
+Deleted: sha256:ebc52c0820157c6138fab1ef29178c2bf6ee556daa626b71881be58ea4e7f499
+Deleted: sha256:14763436649bb77045768571ce5415d203e1affc5caa67c377761455e71128a4
+Deleted: sha256:e384a59f8b8de68eb45406506436f37207ddd4e9e6fc0f63a9c39ad52181a2f3
+Deleted: sha256:83774c3c368ee64b1f53f5687eea74580eb41abce4a51406a6da865d1dc46fe5
+Deleted: sha256:94cee2118701f666138ddd4898435675d28f711c7e3b49be9b20346fecdaa901
+Deleted: sha256:2fc98abdfe53290b0900555785516aab6e4cd682e7ddeba34fe3acdcf491dd6e
+Deleted: sha256:d2c1f1a6bef671794baec7b3f8925362c541904a8bfae59896d382088969e391
+Deleted: sha256:4e500d659dc837c35ccf7856cdfa61869a404534e41d932f84757677084d846f
+Deleted: sha256:c97589037e8281e55fb38ce43080bd818f4a46c6127814e39de44f21450b69d1
+Deleted: sha256:9abdae8081d65d7b544be57ff757bb82dcbe96e97e52c72b2d239106d13a0460
+Deleted: sha256:223b707d55c2ca3ddf4f7faa0fec206cd930508c2eb8ebfdf361b8f2047e8782
+Deleted: sha256:b2d5eeeaba3a22b9b8aa97261957974a6bd65274ebd43e1d81d0a7b8b752b116
+ 数据清除成功，请重新安装环境!!! 可以重新输入 【 curl -sSL https://gsgameshare.com/gsenv | bash 】进行重新安装!!!
+[root@localhost backup]# 
+</code></pre>
+<h2 id="setconfig">setconfig</h2>
+<ul>
+<li>功能：会删除当前服务端版本里面的所有数据，根据交互式配置，重新配置端口，密码等，如果当前已经运行了服务端，会生成当前服务端版本与数据库的备份文件到 <code>/tlgame/backup</code></li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统，按提示进行设置，设置完成后，需要配合 setini 命令才会生效</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">setconfig
+
+[root@localhost ~]# setconfig
+在准备正行重新生成配置文件操作！！，剩余 0 秒，可以在计时结束前，按 CTRL+C 退出！
+请选择是否需要保留原来的版本与数据库
+如果是刚刚搭建环境成功，则不需要保留原来版本和数据。请选择[n]
+保留请输入[y],不保留请输入[n],默认是保留[y]: y
+如果选择了W机+L机模式，则本服务器不要开启 [billing] 服务！！！
+即将设置服务器环境配置荐，请仔细！！注意：W机=Windows服务器，L机=Linux服务器
+0=单L机验证，Linux服务器做验证机器，即只需要一台服务器即可
+1=W机验证+L机，Windows服务器做验证机器,L机不要开验证服务
+
+当前【服务器】选择为[0]，是否需要修改【1=W机验证+L机，0=单L机验证】 [y/n](默认: n): y
+
+请输入【服务器,1=W机验证+L机，0=单L机验证】(默认: [0]): 
+
+当前【Billing验证端口】为：[21818]，是否需要修改【Billing验证端口】 [y/n](默认: n): y
+
+请输入【Billing验证端口】：(默认: 21818): 31818
+
+当前【mysql端口】为：[33061]，是否需要修改【mysql端口】 [y/n](默认: n): y
+
+请输入【mysql端口】：(默认: 33061): 33066
+
+当前【登录端口】为：[13580]，是否需要修改【登录端口】 [y/n](默认: n): y
+
+请输入【登录端口】：(默认: 13580): 23580
+
+当前【游戏端口】为：[15680]，是否需要修改【游戏端口】 [y/n](默认: n): y
+
+请输入【游戏端口】：(默认: 15680): 25680
+
+当前【网站端口】为：[51888]，是否需要修改【网站端口】 [y/n](默认: n): y
+
+请输入【网站端口】：(默认: 51888): 61888
+
+当前【数据库密码】为：[123456]，是否需要修改【数据库密码】 [y/n](默认: n): y
+
+请输入【数据库密码】(默认: 123456): gsgameshare.com
+请稍等，正在写入配置信息……
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+Creating gsnginx ... done
+Creating gsphp   ... done
+Creating gsmysql ... done
+Creating gsredis ... done
+Creating gsserver ... done
+配置文件已经写入成功，必须先执行【setini】再执行【runtlbb】进行开服操作！！
+配置写入成功！！,可以使用 【curgs】命令查看配置的信息
+[root@localhost ~]# 
+</code></pre>
+<h2 id="change">change</h2>
+<ul>
+<li>功能：俗称换端，完成更换服务端操作，数据库清除上一版本的数据，原服务端版本和数据库会自动备份到 <code>/tlgame/backup</code> 目录</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，新的服务端压缩包 <code>tlbb.tar.gz</code> 或者 <code>tlbb.zip</code> 必须上传到  <code>/root</code> 目录下</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">#
+change
+
+[root@gsgameshare-tests ~]# change
+
+正准备换端操作，会清除所有数据，建议在执行前先进行【backup】命令进行备份，剩余 0 秒，可以在计时结束前，按 CTRL+C 退出！
+正在重构环境，换版本…………
+正在备份版本目录，请稍等……
+2022-05-10-15-36-37	tlbb-2022_05_10_15_36_26.tar.gz	备份成功!!
+正在备份数据库，请稍等……
+2022-05-10-15-36-37	tlbbdb-2022-05-10-15-36-37.sql	备份成功!!
+2022-05-10-15-36-37	web-2022-05-10-15-36-37.sql	备份成功
+[2022_05_10_15_36_26]已经成功备份完成，备份文件在 [/tlgame/backup] 目录下
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+gsmysql
+gsnginx
+gsredis
+gsphp
+gsserver
+tar: Removing leading `/' from member names
+服务端文件【tlbb.tar.gz】已经解压成功！！
+Creating gsphp   ... done
+Creating gsnginx ... done
+Creating gsmysql ... done
+Creating gsredis ... done
+Creating gsserver ... done
+配置文件已经写入成功，可以执行【runtlbb】进行开服操作！！
+开始设置定时数据备份，目前为【1】小时备份一次数据库和版本！备份到 /tlgame/backup 目录下
+设置定时备份成功.【1】小时备份一次数据库和版本！备份到 /tlgame/backup 
+定时备份已启动，如果未生效，请重启 crond 服务或者直接重启一下服务器！
+已经成功启动服务端，请耐心等待几分钟后，建议使用：【runtop】查看开服的情况！！
+换端成功，请耐心等待几分钟后，建议使用：【runtop】查看开服的情况！
+[root@gsgameshare-tests ~]#
+</code></pre>
+<h2 id="restart">restart</h2>
+<ul>
+<li>功能：重启容器，相当于重启服务器，不会清空数据和服务端，但服务端程序都会停止。相当于关服操作</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">
+[root@gsgameshare-tests ~]# restart
+在准备正行重启操作！！，剩余 0 秒，可以在计时结束前，按 CTRL+C 退出！
+正在重启…………
+Restarting gsserver ... done
+Restarting gsnginx  ... done
+Restarting gsmysql  ... done
+Restarting gsredis  ... done
+Restarting gsphp    ... done
+ 服务端已经重启成功，如果需要重新开服，请运行【runtlbb】命令 
+[root@gsgameshare-tests ~]# 
+</code></pre>
+<h2 id="gsbak">gsbak</h2>
+<ul>
+<li>功能：启动定时备份数据库与服务端版本，并同时保存每个备份各10份</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：1个或者无参数
+<ul>
+<li>1-23的整数：默认可以省略，表示1小时，备份一次</li>
+<li>如果选择2，表示2个小时备份一次，依次类推</li>
+</ul>
+</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">gsbak
+gsbak 1
+gsbak 2
+gsbak 22
+
+[root@gsgameshare-tests ~]# gsbak 2
+开始设置定时数据备份，目前为【2】小时备份一次数据库和版本！备份到 /tlgame/backup 目录下
+设置定时备份成功.【2】小时备份一次数据库和版本！备份到 /tlgame/backup 
+定时备份已启动，如果未生效，请重启 crond 服务或者直接重启一下服务器！
+[root@gsgameshare-tests ~]# crontab -l
+0 */2 * * * docker exec -d gsmysql /bin/sh /usr/local/bin/gsmysqlBackup.sh &gt; /dev/null 2&gt;&amp;1 &amp;
+0 */2 * * * /bin/bash /usr/local/bin/backup all &gt; /dev/null 2&gt;&amp;1 &amp;
+0 */2 * * * /bin/bash /usr/local/bin/crondel &gt; /dev/null 2&gt;&amp;1 &amp;
+[root@gsgameshare-tests ~]# 
+</code></pre>
+<h2 id="upcmd">upcmd</h2>
+<ul>
+<li>功能：更新命令，更新本文档里面所有命令到最新版本</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">upcmd
+
+[root@gsgameshare-tests ~]# upcmd
+ 命令重新生成成功，如果需要了解详情，可以运行 【gs】命令进行帮助查询！！
+[root@gsgameshare-tests ~]# 
+</code></pre>
+<h2 id="upgm">upgm</h2>
+<ul>
+<li>功能：增加GM网站，暂时只支持GS游享网定制的在线GM管理系统</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">upgm
+
+[root@gsgameshare-tests ~]# upgm
+
+正在开发中……，请关注论坛与群的动态
+[root@gsgameshare-tests ~]# 
+
+</code></pre>
+<h2 id="upow">upow</h2>
+<ul>
+<li>功能：增加官方网站只支持静态网站，游戏官网，首页index.html、index.htm。</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">upow
+
+[root@gsgameshare-tests ~]# upow
+
+国内机器需要已经备案域名，才能使用80端口。默认端口为51888，默认是服务器外网IP+端口访问
+当前【域名】为[0.0.0.0]，是否需要修改【0.0.0.0=使用服务器外网IP+端口访问】 [y/n](默认: n): 
+gsnginx
+创建成功，请将网站上传到/tlgame/www/ow目录里面，并且首页必须是index.html index.htm default.html default.htm中的一种
+[root@gsgameshare-tests ~]# 
+</code></pre>
+<h2 id="step">step</h2>
+<ul>
+<li>功能：分步调试命令脚本，需要配合参数使用。用来调试服务端，主要用于修改版本使用。可以即时发现问题</li>
+<li>用法：此命令必须在容器里面执行，使用 <code>link</code> 命令进入 <code>gsserver</code> 容器进行使用，需要复制或者克隆多个SSH容器</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：1，2，3，4，5 分别代表启动五个不同的进程。</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">step
+
+[root@gsgameshare-tests ~]# step
+请进入容器里面使用此命令，link 命令可以进入！
+使用此命令需要手动创建多窗口，点当前容器标签右键---克隆/复制容器---会基于当前容器创建一个全新的容器。每个容器输入一个命令，一共需要4个窗口
+如果有问题：可以加客服QQ1303588722，进行反馈
+[root@gsgameshare-tests ~]# 
+
+#------------------------------------------------------------------------------------------------------
+
+[root@gsgameshare-tests ~]# link
+[root@19f6787f8cf7 tlbb]# step
+注意：执行此命令前，建议重启服务器，避免一些不必要的问题！
+使用此命令需要手动创建多窗口，点当前容器标签右键---克隆/复制容器---会基于当前容器创建一个全新的容器。每个容器输入一个命令，一共需要4个窗口
+如果有问题：可以加客服QQ1303588722，进行反馈
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+◎ 请在容器外使用runtop命令查看开启了哪些进程
+◎ 请不要重复启动，重复启动没有任何意义，也达到启动不了的效果。
+◎ 使用 exit 退出容器操作命令行，使用 link 进入容器操作命令行
+◎ 步骤[1]：启动 [BILLING] 服务
+◎ 步骤[2]：启动 [ShareMemory] 服务
+◎ 步骤[3]：启动 [Login] 服务
+◎ 步骤[4]：启动 [World] 服务
+◎ 步骤[5]：启动 [Server] 服务
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+
+请选择功能 输入序号并回车：
+
+
+</code></pre>
+<h2 id="gstl">gstl</h2>
+<ul>
+<li>功能：[已废弃]作用: 环境初始化命令，根据提示进行安装。如果已经安装过，则会自动检测退出</li>
+<li>用法：安装环境的时候自动调用</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">gstl
+
+[root@gsgameshare-tests ~]# gstl
+gsserver
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+此命令只用于查看当前配置信息，不作任何修改。如需要重新设置，请执行【setconfig】命令
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+◎  数据库端口: 44066
+◎  数据库密码: www.gsgameshare.com
+◎  验证端口: 41818
+◎  登录网关端口: 33580
+◎  游戏网关端口: 35680
+◎  网站端口: 11888
+◎  是否单服务器: 是
+◎  转发机器: 127.0.0.1
+◎  服务端路径: /tlgame/tlbb
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+
+虚拟缓存已经提升到 (5.9Gi) 
+【GS游享网】环境已初始化配置参数，如上所示，请保管好参数，如需重新配置，请执行【setconfig】命令！获取命令帮助请使用 [gs] 命令
+[root@gsgameshare-tests ~]# 
+</code></pre>
+<h2 id="backup">backup</h2>
+<ul>
+<li>功能：手动执行备份服务端版本，数据库。 备份目录在 <code>/tlgame/backup</code> 目录下</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests ~]# backup
+
+请选择需要备份的类型，0=备份版本+数据库，1=只备份版本，2=只备份数据库。默认为[0]备份所有.备份目录[/tlgame/backup]
+请输入[0]=备份版本+数据库,[1]=只备份版本,[2]=只备份数据库[0、1、2](默认: 0): 
+正在备份版本目录，请稍等……
+2022-05-10-16-05-12	tlbb-2022_05_10_16_04_58.tar.gz	备份成功!!
+正在备份数据库，请稍等……
+2022-05-10-16-05-12	tlbbdb-2022-05-10-16-05-12.sql	备份成功!!
+2022-05-10-16-05-12	web-2022-05-10-16-05-12.sql	备份成功
+2022-05-10-16-05-12	 web和tlbbdb库 	备份成功!!
+[2022_05_10_16_04_58]已经成功备份完成，备份文件在 [/tlgame/backup] 目录下
+[root@gsgameshare-tests ~]# 
+
+</code></pre>
+<h2 id="close">close</h2>
+<ul>
+<li>功能：关闭服务端进程，作用等同于 <code>restart</code> 命令，此命令容易出现僵死进程，导致无法启动成功版本。建议使用 <code>restart</code> 命令</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests backup]# close
+服务端正在关闭……，
+请稍候……，
+请使用【runtop】查看对应进程是否完全退出
+等进程序全部退出后如果需要重新开启，请运行【runtlbb】命令
+[root@gsgameshare-tests backup]# 
+
+</code></pre>
+<h2 id="gslog">gslog</h2>
+<ul>
+<li>功能：查看调试日志，开启后，<code>/tlgame/tlbb/Server/Log</code> 目录会创建，里面存放服务端运行的所有日志</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：1个
+<ul>
+<li>1：查看 [BILLING] 日志,只有用本服务器billing才能查看</li>
+<li>2：查看 [ShareMemory] 日志</li>
+<li>3：查看 [Login] 日志</li>
+<li>4：查看 [World] 日志</li>
+<li>0：查看 [error] 日志</li>
+</ul>
+</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，服务端正确运行中</li>
+<li>参考实例</li>
+<li>提示：也可以自行进<code>/tlgame/tlbb/Server/Log</code>  目录里面查看更多调试日志文件</li>
+<li>注意：**切勿长时间开启，记录的日志足够让你服务器硬盘爆满 **</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests ~]# gslog
+正准备查看日志动态！！,请使用完一定记得关闭（命令【rmlog】）。不然日志可能会挤爆服务器硬盘！
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+◎ 切记!!!看完日志需要退出请按 CTRL+C 退出！
+◎ 如果想一次性查看所有日志，需要多开ssh容器分开运行
+◎ 如若需要再查看其他日志，请重新进行本命令！
+◎ 切记!!!查看完日志后，请使用【rmlog】命令进行清除，小心挤爆人的服务器
+◎ [1]：查看 [BILLING] 日志,只有用本服务器billing才能查看
+◎ [2]：查看 [ShareMemory] 日志
+◎ [3]：查看 [Login] 日志
+◎ [4]：查看 [World] 日志
+◎ [5]：查看 [Lua] 日志
+◎ [0]：查看 [error] 日志
+◎ [q]：退出按 q 或者 Q，也可以按 CTRL+C 退出！
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+请选择功能 输入序号并回车：1
+未发现日志文件，请按 CTRL+C 退出！
+
+</code></pre>
+<h2 id="rmlog">rmlog</h2>
+<ul>
+<li>功能：删除调试日志，全清除 <code>/tlgame/tlbb/Server/Log</code> 目录</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests ~]# rmlog
+ 清理成功！如果需要重新打开，请使用【gslog】,请使用完一定记得关闭。小心挤爆服务器硬盘！
+[root@gsgameshare-tests ~]# 
+
+</code></pre>
+<h2 id="curgs">curgs</h2>
+<ul>
+<li>功能：查看配置信息，包括端口号，账号密码等</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统，请不要在大众面前使用，因为服务器的配置信息容易暴露</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests ~]# curgs
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+此命令只用于查看当前配置信息，不作任何修改。如需要重新设置，请执行【setconfig】命令
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+◎  数据库端口: 44066
+◎  数据库密码: www.gsgameshare.com
+◎  验证端口: 41818
+◎  登录网关端口: 33580
+◎  游戏网关端口: 35680
+◎  网站端口: 11888
+◎  是否单服务器: 是
+◎  转发机器: 127.0.0.1
+◎  服务端路径: /tlgame/tlbb
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+
+[root@gsgameshare-tests ~]# 
+
+</code></pre>
+<h2 id="setpoint">setpoint</h2>
+<ul>
+<li>功能：修改注册账号送默认充值点，表示从设置此命令起，注册的账号会自动赠送指定的充值点数</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统，请不要在大众面前使用，因为服务器的配置信息容易暴露</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：整数</li>
+<li>范围：0-21亿</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests ~]# setpoint 8899
+设置成功:现在开始，新注册账号上线默认送【8899】充值点，请不要设置过高，一些版本可以会显示为负数
+[root@gsgameshare-tests ~]# 
+
+</code></pre>
+<h2 id="reset">reset</h2>
+<ul>
+<li>功能：删档数据库，清空账号数据库，角色数据库数据。使用前请一定要备份好，如有误删本环境概不负责</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：无</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests ~]# reset
+
+在准备正行删档操作！！，剩余 0 秒，可以在计时结束前，按 CTRL+C 退出！如果需要备份，退出后再执行【backup】命令
+已经删档成功据全部清空…………
+[root@gsgameshare-tests ~]# 
+
+</code></pre>
+<h2 id="setvalid">setvalid</h2>
+<ul>
+<li>功能：封号/解封号</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：1-2个
+<ul>
+<li>封号：setvalid gs@game.sohu.com 1</li>
+<li>解封：setvalid gs@game.sohu.com</li>
+</ul>
+</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests ~]# setvalid gs@game.sohu.com 1
+封[gs@game.sohu.com]账号成功：登录游戏查看，如果未实现请退出游戏再执行一次
+[root@gsgameshare-tests ~]# 
+
+[root@gsgameshare-tests ~]# setvalid gs@game.sohu.com
+解封[gs@game.sohu.com]账号成功：登录游戏查看，如果未实现请退出游戏再执行一次
+[root@gsgameshare-tests ~]# 
+
+</code></pre>
+<h2 id="restore">restore</h2>
+<ul>
+<li>功能：使用命令行进行数据库还原操作，还原前先会进行当前数据库的备份</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：2个
+<ul>
+<li>参数1：数据库名。web / tlbbdb</li>
+<li>参数2：数据库文件绝对路径，例如 <code>/tlgame/backup/web-2022-05-05-15-15-15.sql</code></li>
+</ul>
+</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests backup]# restore tlbbdb /tlgame/backup/tlbbdb-2022-05-10-14-23-47.sql
+正在备份数据库，请稍等……
+
+2022-05-10-16-39-13	tlbbdb-2022-05-10-16-39-13.sql	备份成功!!
+2022-05-10-16-39-13	web-2022-05-10-16-39-13.sql	备份成功
+2022-05-10-16-39-13	 web和tlbbdb库 	备份成功!!
+[2022_05_10_16_39_13]已经成功备份完成，备份文件在 [/tlgame/backup] 目录下
+ 数据还原成功！！如有疑问可查看【/tlgame/backup】有还原前的备份，可尝试手动使用工具导入
+[root@gsgameshare-tests backup]# 
+
+
+[root@gsgameshare-tests backup]# restore web /tlgame/backup/web-2022-05-10-14-23-47.sql
+正在备份数据库，请稍等……
+
+2022-05-10-16-40-43	tlbbdb-2022-05-10-16-40-43.sql	备份成功!!
+2022-05-10-16-40-43	web-2022-05-10-16-40-43.sql	备份成功
+2022-05-10-16-40-43	 web和tlbbdb库 	备份成功!!
+[2022_05_10_16_40_43]已经成功备份完成，备份文件在 [/tlgame/backup] 目录下
+ 数据还原成功！！如有疑问可查看【/tlgame/backup】有还原前的备份，可尝试手动使用工具导入
+[root@gsgameshare-tests backup]# 
+
+</code></pre>
+<h2 id="delbak">delbak</h2>
+<ul>
+<li>功能：定时删除备份文件，默认保留最新的文件各10份。如果已经开服，则已经自动加入到定时任务里面</li>
+<li>用法：可以在任何目录里面直接使用，前提是 <code>root</code> 账号登录系统</li>
+<li>依赖：必须依赖 <code>gs</code> 环境正常的情况下才能使用</li>
+<li>参数：1个
+<ul>
+<li>1-23整数，表示保留几份</li>
+<li>默认为10，表示保留10份</li>
+</ul>
+</li>
+<li>条件：必须使用 <code>root</code> 登录，当前环境需要正常，</li>
+<li>说明：默认 <code>gsbak</code> 会1小时备份一次 <code>web</code> 和 <code>tlbbdb</code> 库，<code>tlbb服务端</code>  <code>crondel</code> 会定时删除多余的备份文件，只保留三种备份的各10份最新文件</li>
+<li>参考实例</li>
+</ul>
+<pre><code class="language-bash">[root@gsgameshare-tests backup]# crondel 
+自动清理备份文件完成。
+[root@gsgameshare-tests backup]# 
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#gs-%E5%91%BD%E4%BB%A4%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3">GS 命令及配置详解</a>
+<ul>
+<li><a href="#untar">untar</a></li>
+<li><a href="#setini">setini</a></li>
+<li><a href="#runtlbb">runtlbb</a></li>
+<li><a href="#runtop">runtop</a></li>
+<li><a href="#link">link</a></li>
+<li><a href="#swap">swap</a></li>
+<li><a href="#rebuild">rebuild</a></li>
+<li><a href="#remove">remove</a></li>
+<li><a href="#setconfig">setconfig</a></li>
+<li><a href="#change">change</a></li>
+<li><a href="#restart">restart</a></li>
+<li><a href="#gsbak">gsbak</a></li>
+<li><a href="#upcmd">upcmd</a></li>
+<li><a href="#upgm">upgm</a></li>
+<li><a href="#upow">upow</a></li>
+<li><a href="#step">step</a></li>
+<li><a href="#gstl">gstl</a></li>
+<li><a href="#backup">backup</a></li>
+<li><a href="#close">close</a></li>
+<li><a href="#gslog">gslog</a></li>
+<li><a href="#rmlog">rmlog</a></li>
+<li><a href="#curgs">curgs</a></li>
+<li><a href="#setpoint">setpoint</a></li>
+<li><a href="#reset">reset</a></li>
+<li><a href="#setvalid">setvalid</a></li>
+<li><a href="#restore">restore</a></li>
+<li><a href="#delbak">delbak</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://yulinzhihou.github.io/post/about/">
+              <h3 class="post-title">
+                关于
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ca1d6fb437a399da4390',
+    clientSecret: 'e18e044fef2b96cd190004ede9be6618f319295b',
+    repo: 'yulinzhihou.github.io',
+    owner: 'yulinzhihou',
+    admin: ['yulinzhihou'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155979519748628"
+     crossorigin="anonymous"></script>
+  <a class="rss" href="https://yulinzhihou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

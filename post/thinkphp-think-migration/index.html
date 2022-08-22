@@ -1,0 +1,345 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ThinkPHP think-migration 数据迁移从零开始使用 | 雨林之后</title>
+<link rel="shortcut icon" href="https://yulinzhihou.github.io/favicon.ico?v=1660988316585">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yulinzhihou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="ThinkPHP think-migration 数据迁移从零开始使用 | 雨林之后 - Atom Feed" href="https://yulinzhihou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+
+
+一、安装最新的 ThinkPHP
+二、基于 ThinkPHP 安装数据迁移插件
+三、创建迁移文件
+四、创建迁移文件
+五、执行
+
+
+
+
+一、安装最新的 ThinkPHP
+详情见官方手册：https://www.kancloud.cn/m..." />
+    <meta name="keywords" content="migration,thinkphp,php" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://yulinzhihou.github.io">
+  <img class="avatar" src="https://yulinzhihou.github.io/images/avatar.png?v=1660988316585" alt="">
+  </a>
+  <h1 class="site-title">
+    雨林之后
+  </h1>
+  <p class="site-description">
+    IT互联网技术,学习折腾研究
+
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/yulinzhihou" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              ThinkPHP think-migration 数据迁移从零开始使用
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-20
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://yulinzhihou.github.io/tag/TqIX7HcKo/" class="post-tag">
+                  # migration
+                </a>
+              
+                <a href="https://yulinzhihou.github.io/tag/0N84mDso99/" class="post-tag">
+                  # thinkphp
+                </a>
+              
+                <a href="https://yulinzhihou.github.io/tag/EITlFyhPi/" class="post-tag">
+                  # php
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%9A%84-thinkphp">一、安装最新的 <code>ThinkPHP</code></a></li>
+<li><a href="#%E4%BA%8C-%E5%9F%BA%E4%BA%8E-thinkphp-%E5%AE%89%E8%A3%85%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E6%8F%92%E4%BB%B6">二、基于 <code>ThinkPHP</code> 安装数据迁移插件</a></li>
+<li><a href="#%E4%B8%89-%E5%88%9B%E5%BB%BA%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6">三、创建迁移文件</a></li>
+<li><a href="#%E5%9B%9B-%E5%88%9B%E5%BB%BA%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6">四、创建迁移文件</a></li>
+<li><a href="#%E4%BA%94-%E6%89%A7%E8%A1%8C">五、执行</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h2 id="一-安装最新的-thinkphp">一、安装最新的 <code>ThinkPHP</code></h2>
+<p>详情见官方手册：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037481">https://www.kancloud.cn/manual/thinkphp6_0/1037481</a><br>
+我这边使用 <code>Composer</code> 方式进行安装，以项目 <code>tp</code> 为目录</p>
+<pre><code class="language-bash">composer create-project topthink/think tp
+</code></pre>
+<p>配置数据库连接。<code>tp/.env</code> 文件，默认可以先将项目创建完成后根目录里面的 <code>.env.sample</code> 文件复制一份并改名为 <code>.env</code> 打开此文件</p>
+<pre><code class="language-ini">APP_DEBUG=true
+
+[APP]
+DEFAULT_TIMEZONE=Asia/Shanghai
+
+[DATABASE]
+TYPE=mysql
+HOSTNAME=127.0.0.1
+DATABASE=test
+USERNAME=root
+PASSWORD=123456
+HOSTPORT=3306
+CHARSET=utf8
+DEBUG=true
+</code></pre>
+<p>请确保数据库存在并且连接成功</p>
+<h2 id="二-基于-thinkphp-安装数据迁移插件">二、基于 <code>ThinkPHP</code> 安装数据迁移插件</h2>
+<p>thinkphp6 数据库迁移工具，进入到项目目录 <code>tp</code> 下面，打开命令行工具执行安装数据迁移文件</p>
+<pre><code class="language-bash">composer require topthink/think-migration
+</code></pre>
+<h2 id="三-创建迁移文件">三、创建迁移文件</h2>
+<p>新增迁移文件, 进入到项目指定项目的根目录,这里创建一个迁移文件，文件名称必须要使用大驼峰进行命名，如你需要创建一个 <code>test</code> 数据表，那么建议使用 <code>TestCreate</code> 名称进行定义，这样可以很清楚知道这个数据迁移文件是用来做创建 <code>test</code> 数据表相关的定义的。当然并不是一定要这样进行命名，也可以随意使用其他方式，只是为了方便见名知意。</p>
+<pre><code class="language-bash">php think migrate:create TestCreate
+</code></pre>
+<p>执行上面命令会在项目目录下自动生成 <code>tp/databases/migrations/20220820065413_test_create.php</code> 文件。当前文件名前面的像日期时间的数字表示是当前生成此文件的时间年月日时分秒的数字。后面是文件名</p>
+<h2 id="四-创建迁移文件">四、创建迁移文件</h2>
+<p>官方插件没给详细的迁移文件内容语法，比如简单和随意，<code>think-migration</code> 是基于 <code>phinx</code>，所以手册可以查看 <code>phinx</code> 官方的手册。</p>
+<ol>
+<li><a href="https://www.kancloud.cn/manual/thinkphp6_0/1118028">thinkphp-migration官方手册</a></li>
+<li><a href="http://docs.phinx.org">phinx 官方手册</a></li>
+<li><a href="https://tsy12321.gitbooks.io/phinx-doc/content/">大佬基于 phinx 翻译出的中文手册，将就着看</a></li>
+</ol>
+<p>这里基于我刚刚上面创建的一个数据迁移文件  <code>tp/databases/migrations/20220820065413_test_create.php</code> ，进行一个简单的案例编写</p>
+<pre><code class="language-php"> &lt;?php
+
+use Phinx\Db\Adapter\MysqlAdapter;
+use think\migration\Migrator;
+use think\migration\db\Column;
+
+class TestCreate extends Migrator
+{
+    /**
+     * Change Method.
+     *
+     * Write your reversible migrations using this method.
+     *
+     * More information on writing migrations is available here:
+     * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
+     *
+     * The following commands can be used in this method and Phinx will
+     * automatically reverse them when rolling back:
+     *
+     *    createTable
+     *    renameTable
+     *    addColumn
+     *    renameColumn
+     *    addIndex
+     *    addForeignKey
+     *
+     * Remember to call &quot;create()&quot; or &quot;update()&quot; and NOT &quot;save()&quot; when working
+     * with the Table class.
+     */
+    public function change()
+    {
+        $table = $this-&gt;table('test',['engine'=&gt;'innodb','charset'=&gt;'utf8mb4','auto_increment'=&gt;true,'comment'=&gt;'测试案例表']);
+        $table
+            -&gt;addColumn('username','string',['limit'=&gt;60,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'用户名'])
+            -&gt;addColumn('password','string',['limit'=&gt;128,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'密码'])
+            -&gt;addColumn('salt','string',['limit'=&gt;32,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'密码盐'])
+            -&gt;addColumn('real_name','string',['limit'=&gt;128,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'真实姓名'])
+            -&gt;addColumn('avatar','string',['limit'=&gt;128,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'头像'])
+            -&gt;addColumn('desc','string',['limit'=&gt;128,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'描述'])
+            -&gt;addColumn('role_id','integer',['limit'=&gt;11,'signed'=&gt;false,'null'=&gt;false,'default'=&gt;0,'comment'=&gt;'角色组id'])
+            -&gt;addColumn('phone','string',['limit'=&gt;20,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'手机'])
+            -&gt;addColumn('email','string',['limit'=&gt;128,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'邮箱'])
+            -&gt;addColumn('extension','json',['null'=&gt;true,'default'=&gt;null,'comment'=&gt;'扩展信息'])
+            -&gt;addColumn('sort','integer',['limit'=&gt;MysqlAdapter::INT_TINY,'null'=&gt;false,'default'=&gt;1,'comment'=&gt;'排序0-255(越小越前)'])
+            -&gt;addColumn('status','integer',['limit'=&gt;MysqlAdapter::INT_TINY,'null'=&gt;false,'default'=&gt;1,'comment'=&gt;'状态：为1正常，为0禁用'])
+            -&gt;addColumn('login_ip','string',['limit'=&gt;128,'null'=&gt;false,'default'=&gt;'','comment'=&gt;'最近登录IP'])
+            -&gt;addColumn('create_time','integer',['limit'=&gt;11,'signed'=&gt;false,'null'=&gt;false,'default'=&gt;0,'comment'=&gt;'创建时间'])
+            -&gt;addColumn('update_time','integer',['limit'=&gt;11,'signed'=&gt;false,'null'=&gt;false,'default'=&gt;0,'comment'=&gt;'更新时间'])
+            -&gt;setPrimaryKey('id')
+            -&gt;addIndex('id')
+            -&gt;addIndex('username')
+            -&gt;addIndex('real_name')
+            -&gt;create();
+    }
+}
+</code></pre>
+<h2 id="五-执行">五、执行</h2>
+<p>回到项目根目录 <code>tp</code> 目录下，在终端里面运行如下命令</p>
+<pre><code class="language-bash">php think migrate:run
+</code></pre>
+<p>运行成功后会在数据表里面存在一个 <code>test</code> 的数据表。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%9A%84-thinkphp">一、安装最新的 <code>ThinkPHP</code></a></li>
+<li><a href="#%E4%BA%8C-%E5%9F%BA%E4%BA%8E-thinkphp-%E5%AE%89%E8%A3%85%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E6%8F%92%E4%BB%B6">二、基于 <code>ThinkPHP</code> 安装数据迁移插件</a></li>
+<li><a href="#%E4%B8%89-%E5%88%9B%E5%BB%BA%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6">三、创建迁移文件</a></li>
+<li><a href="#%E5%9B%9B-%E5%88%9B%E5%BB%BA%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6">四、创建迁移文件</a></li>
+<li><a href="#%E4%BA%94-%E6%89%A7%E8%A1%8C">五、执行</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://yulinzhihou.github.io/post/lua-ji-chu-xue-xi-huan-jing-an-zhuang/">
+              <h3 class="post-title">
+                Lua 02-基础学习笔记-环境安装
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ca1d6fb437a399da4390',
+    clientSecret: 'e18e044fef2b96cd190004ede9be6618f319295b',
+    repo: 'yulinzhihou.github.io',
+    owner: 'yulinzhihou',
+    admin: ['yulinzhihou'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155979519748628"
+     crossorigin="anonymous"></script>
+  <a class="rss" href="https://yulinzhihou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
